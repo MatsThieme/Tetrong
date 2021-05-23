@@ -1,1 +1,1 @@
-type AssetName = 'some image';
+type AssetName = 'platform';
