@@ -1,0 +1,24 @@
+{
+    "title": "Template",
+    "description": "SnowballEngine Project Template",
+    "version": "1.0.0",
+    "settings": {
+        "allowContextMenu": false,
+        "transparentBackground": false,
+        "transparentBackgroundAlpha": 0,
+        "PIXIjsAntialiasing": true
+    },
+    "cordova-settings": {
+        "id": "com.SnowballEngine.Template",
+        "author": {
+            "name": "",
+            "email": "",
+            "href": ""
+        },
+        "plugins": []
+    },
+    "build": {
+        "isDevelopmentBuild": true,
+        "updateADB": true
+    }
+}

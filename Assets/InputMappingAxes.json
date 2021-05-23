@@ -1,0 +1,16 @@
+{
+    "touch": {
+        "PointerPosition": 0
+    },
+    "keyboard": {
+        "MoveHorizontal": "Axis(KeyA, KeyD)",
+        "MoveVertical": "Axis(KeyS, KeyW)"
+    },
+    "mouse": {
+        "PointerPosition": 0
+    },
+    "gamepad": {
+        "MoveHorizontal": 0,
+        "MoveVertical": 1
+    }
+}

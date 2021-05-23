@@ -1,0 +1,14 @@
+{
+    "touch": {
+        "Trigger": 0
+    },
+    "keyboard": {
+        "Jump": "Space"
+    },
+    "mouse": {
+        "Trigger": 0
+    },
+    "gamepad": {
+        "Jump": 0
+    }
+}
