@@ -1,6 +1,6 @@
 import { PlatformMoveBehaviour } from 'Behaviours/PlatformMoveBehaviour';
 import { TetrominoSpawnBehaviour } from 'Behaviours/TetrominoSpawnBehaviour';
-import { Camera, Client, GameObject } from 'SE';
+import { AudioListener, Camera, Client, GameObject } from 'SE';
 
 export function CameraPrefab(gameObject: GameObject) {
     gameObject.addComponent(Camera, camera => {
@@ -9,4 +9,6 @@ export function CameraPrefab(gameObject: GameObject) {
 
     gameObject.addComponent(PlatformMoveBehaviour);
     gameObject.addComponent(TetrominoSpawnBehaviour);
+
+    gameObject.addComponent(AudioListener);
 }

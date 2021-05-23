@@ -1,15 +1,24 @@
-import { Behaviour, ComponentType, GameObject, GameTime, Rigidbody, Scene, Vector2 } from 'SE';
+import { Engine, IEventCollision } from 'matter-js';
+import { AudioSource, Behaviour, ComponentType, GameObject, GameTime, Rigidbody, Scene, Vector2 } from 'SE';
 import { SaveScore } from './Tetris/SaveScore';
 import { TetrominoSpawnBehaviour } from './TetrominoSpawnBehaviour';
 
 export class BallBehaviour extends Behaviour {
     rigidbody!: Rigidbody;
     speed: number = 8;
+    audioSource1!: AudioSource;
+    audioSource2!: AudioSource;
 
     start() {
         this.rigidbody = this.gameObject.getComponent(ComponentType.Rigidbody)!;
+        const [bounce, hit] = this.gameObject.getComponents(ComponentType.AudioSource)!;
+
+        this.audioSource1 = bounce;
+        this.audioSource2 = hit;
 
         if (!this.rigidbody) throw new Error('ball rigidbody not found');
+        if (!this.audioSource1) throw new Error('ball audioSource1 not found');
+        if (!this.audioSource2) throw new Error('ball audioSource2 not found');
     }
 
     update() {
@@ -32,6 +41,18 @@ export class BallBehaviour extends Behaviour {
             const bh = camera.getComponent(TetrominoSpawnBehaviour)!;
 
             SaveScore.highScore = SaveScore.lastScore = bh.tetris.score;
+        }
+    }
+
+    onCollisionEnter(matterCollisionEvent: IEventCollision<Engine>) {
+        const otherBody = (<any>matterCollisionEvent.pairs[0].bodyA).gameObject.name === this.gameObject.name ? matterCollisionEvent.pairs[0].bodyB : matterCollisionEvent.pairs[0].bodyA;
+
+        if ((<any>otherBody).gameObject.name.includes('Tetromino')) {
+            this.audioSource2.stop();
+            this.audioSource2.play();
+        } else {
+            this.audioSource1.stop();
+            this.audioSource1.play();
         }
     }
 }

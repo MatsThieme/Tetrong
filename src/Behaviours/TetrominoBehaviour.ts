@@ -15,7 +15,7 @@ export class TetrominoBehaviour extends Behaviour {
     start() {
         this.rigidbody = this.gameObject.getComponent(ComponentType.Rigidbody)!;
 
-        if (!this.rigidbody) throw new Error('rb not found');
+        if (!this.rigidbody) throw new Error('rigidbody not found');
 
         this.xpos = this.gameObject.transform.position.x;
     }
