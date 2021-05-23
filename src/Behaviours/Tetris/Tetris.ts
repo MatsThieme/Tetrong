@@ -1,3 +1,4 @@
+import { SaveScore } from 'Behaviours/Tetris/SaveScore';
 import { TetrominoBehaviour } from 'Behaviours/TetrominoBehaviour';
 import { TetrominoMatrix } from 'Prefabs/Tetromino/TetrominoMatrix';
 import { clamp, ComponentType, Instantiate, PolygonCollider, Vector2 } from 'SE';
@@ -10,6 +11,8 @@ export class Tetris {
     private _nextID: number;
     private _scale: number;
 
+
+    public score: number;
     public readonly matrixFull: boolean;
 
     public constructor(size: Vector2, scale: number = 0.7) {
@@ -24,6 +27,7 @@ export class Tetris {
         this._nextID = 1;
         this._scale = scale;
 
+        this.score = 0;
         this.matrixFull = false;
     }
 
@@ -90,6 +94,11 @@ export class Tetris {
         ids = ids.filter(Boolean);
 
         this.updateTetrominos(id);
+
+        this.score++;
+
+        SaveScore.updateScoreDisplay(this.score);
+
     }
 
     /**

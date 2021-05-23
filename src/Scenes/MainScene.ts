@@ -1,13 +1,15 @@
 import { BallPrefab } from 'Prefabs/BallPrefab';
 import { BottomBoundaryPrefab } from 'Prefabs/BottomBoundaryPrefab';
 import { CameraPrefab } from 'Prefabs/CameraPrefab';
-import { FPSDisplayPrefab } from 'Prefabs/FPSDisplayPrefab';
 import { PlatformPrefab } from 'Prefabs/PlatformPrefab';
 import { TopBoundaryPrefab } from 'Prefabs/TopBoundaryPrefab';
+import { FPSDisplayPrefab } from 'Prefabs/UI/FPSDisplayPrefab';
+import { ScoreDisplayPrefab } from 'Prefabs/UI/ScoreDisplayPrefab';
 import { Instantiate, Scene } from 'SE';
 
 export async function MainScene(scene: Scene) {
     await scene.ui.addMenu('FPS Display', FPSDisplayPrefab);
+    await scene.ui.addMenu('Score Display', ScoreDisplayPrefab);
 
     await Instantiate('Camera', CameraPrefab);
 

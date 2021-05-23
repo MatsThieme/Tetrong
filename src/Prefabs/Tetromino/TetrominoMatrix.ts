@@ -266,7 +266,7 @@ export class TetrominoMatrix {
 
             this._matrix.reverse();
 
-            gameObject.transform.position.y = 5;
+            gameObject.transform.position.y = 5 + this.height;
         });
     }
 
