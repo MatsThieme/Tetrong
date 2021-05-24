@@ -59,8 +59,6 @@ export class Asset implements Destroyable {
                 mirroredX: false,
                 mirroredY: false
             };
-
-            console.log(this.image.size.toString())
         } else if (this.type === AssetType.Video) {
             this.video = {
                 size: new Vector2((<HTMLVideoElement>this.data).videoWidth, (<HTMLVideoElement>this.data).videoHeight),

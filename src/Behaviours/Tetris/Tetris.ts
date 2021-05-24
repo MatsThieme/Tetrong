@@ -99,8 +99,6 @@ export class Tetris {
         this.score++;
 
         SaveScore.updateScoreDisplay(this.score);
-
-        console.log(this._matrix);
     }
 
     /**
