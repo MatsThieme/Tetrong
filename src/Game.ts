@@ -13,7 +13,7 @@ export class Game {
         sceneManager.add('Main Menu Scene', MainMenuScene);
         sceneManager.add('Main Scene', MainScene);
 
-        Client.requestFullscreen(document.body);
+        if (Client.isMobile) Client.requestFullscreen(document.body);
 
         await sceneManager.load('Loading Screen Scene');
 
