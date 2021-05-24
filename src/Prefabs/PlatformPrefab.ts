@@ -3,7 +3,7 @@ import { Assets, Color, GameObject, RectangleCollider, Rigidbody, Texture } from
 export function PlatformPrefab(gameObject: GameObject): void {
     gameObject.addComponent(Texture, texture => {
         texture.asset = Assets.get('platform');
-        texture.tint = Color.orange;
+        texture.tint = Color.yellow;
     });
 
     gameObject.addComponent(RectangleCollider, c => {
@@ -13,6 +13,6 @@ export function PlatformPrefab(gameObject: GameObject): void {
         rb.ignoreGravity = true;
     });
 
-    gameObject.transform.scale.x = 0.25;
-    gameObject.transform.scale.y = 1.75;
+    gameObject.transform.scale.x = 0.3;
+    gameObject.transform.scale.y = 2;
 }

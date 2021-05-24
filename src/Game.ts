@@ -13,6 +13,7 @@ export class Game {
         sceneManager.add('Main Menu Scene', MainMenuScene);
         sceneManager.add('Main Scene', MainScene);
 
+        Client.requestFullscreen(document.body);
 
         await sceneManager.load('Loading Screen Scene');
 
@@ -23,7 +24,7 @@ export class Game {
 
         UIFonts.add('Red-Normal', new TextStyle({
             fontFamily: 'Verdana, Tahoma, sans-serif',
-            fontSize: 5,
+            fontSize: 7,
             fill: Color.red.rgbString,
             stroke: Color.black.rgbString,
             strokeThickness: 0.3
@@ -31,14 +32,12 @@ export class Game {
 
         UIFonts.add('Red-Large', new TextStyle({
             fontFamily: 'Verdana, Tahoma, sans-serif',
-            fontSize: 10,
+            fontSize: 15,
             fill: Color.red.rgbString,
             stroke: Color.black.rgbString,
             strokeThickness: 0.3
         }));
 
-
-        Client.requestFullscreen(document.body);
 
         await sceneManager.load('Main Menu Scene');
     }

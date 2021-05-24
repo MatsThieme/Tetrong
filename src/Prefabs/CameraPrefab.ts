@@ -1,10 +1,12 @@
 import { PlatformMoveBehaviour } from 'Behaviours/PlatformMoveBehaviour';
 import { TetrominoSpawnBehaviour } from 'Behaviours/TetrominoSpawnBehaviour';
-import { AudioListener, Camera, Client, GameObject } from 'SE';
+import { AudioListener, Camera, GameObject, Vector2 } from 'SE';
 
 export function CameraPrefab(gameObject: GameObject) {
     gameObject.addComponent(Camera, camera => {
-        camera.size = Client.aspectRatio;
+        camera.size = new Vector2(16, 9);
+        camera.fitAspectRatio = true;
+        console.log(camera.size)
     });
 
     gameObject.addComponent(PlatformMoveBehaviour);

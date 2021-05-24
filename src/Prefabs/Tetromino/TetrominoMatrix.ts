@@ -239,6 +239,7 @@ export class TetrominoMatrix {
 
             await gameObject.addComponent(Rigidbody, rb => {
                 rb.collisionFilterMask = 0b1;
+                rb.force = new Vector2(0, 0.001);
             });
 
             await gameObject.addComponent(TetrominoBehaviour);
@@ -266,7 +267,7 @@ export class TetrominoMatrix {
 
             this._matrix.reverse();
 
-            gameObject.transform.position.y = 5 + this.height;
+            gameObject.transform.position.y = 5 + this.height / 2;
         });
     }
 
@@ -290,14 +291,14 @@ export class TetrominoMatrix {
             [true, true, true, false],
             [false, false, false, false],
             [false, false, false, false]
-        ], Color.orange);
+        ], Color.darkorange);
 
         const long = new TetrominoMatrix([
             [true, true, true, true],
             [false, false, false, false],
             [false, false, false, false],
             [false, false, false, false]
-        ], Color.lightblue);
+        ], Color.aqua);
 
         const z1 = new TetrominoMatrix([
             [true, true, false, false],
@@ -311,7 +312,7 @@ export class TetrominoMatrix {
             [true, true, false, false],
             [false, false, false, false],
             [false, false, false, false]
-        ], Color.green);
+        ], Color.lime);
 
         const thing3 = new TetrominoMatrix([
             [false, true, false, false],

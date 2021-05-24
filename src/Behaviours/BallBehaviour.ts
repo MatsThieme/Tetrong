@@ -5,7 +5,7 @@ import { TetrominoSpawnBehaviour } from './TetrominoSpawnBehaviour';
 
 export class BallBehaviour extends Behaviour {
     rigidbody!: Rigidbody;
-    speed: number = 8;
+    speed: number = 7;
     audioSource1!: AudioSource;
     audioSource2!: AudioSource;
 
@@ -42,6 +42,8 @@ export class BallBehaviour extends Behaviour {
 
             SaveScore.highScore = SaveScore.lastScore = bh.tetris.score;
         }
+
+        this.rigidbody.angularVelocity *= 0.985;
     }
 
     onCollisionEnter(matterCollisionEvent: IEventCollision<Engine>) {

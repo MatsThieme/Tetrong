@@ -41,9 +41,10 @@ export class Tetris {
             return;
         }
 
-        const prefab = TetrominoMatrix.matrices[bestfit.tetrominoIndex].getPrefab();
-
         this.addToMatrix(bestfit.tetrominoIndex, bestfit.x, bestfit.y, this._nextID);
+
+
+        const prefab = TetrominoMatrix.matrices[bestfit.tetrominoIndex].getPrefab();
 
         const go = await Instantiate('Tetromino ' + this._nextID, prefab);
         go.transform.scale.scale(this._scale);
@@ -99,6 +100,7 @@ export class Tetris {
 
         SaveScore.updateScoreDisplay(this.score);
 
+        console.log(this._matrix);
     }
 
     /**
@@ -150,7 +152,8 @@ export class Tetris {
     private updateTetrominos(id: number) {
         for (let y = this._height - 1; y >= 0; y--) {
             for (let x = this._width - 1; x >= 0; x--) {
-                if (this.canMoveTetromino(this._matrix[y][x])) this.moveTetromino(this._matrix[y][x]);
+                const id = this._matrix[y][x];
+                while (this.canMoveTetromino(id)) this.moveTetromino(id);
             }
         }
     }
