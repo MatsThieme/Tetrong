@@ -149,7 +149,7 @@ export class TetrominoMatrix {
         return new TetrominoMatrix(m, this.color);
     }
 
-    public getSides(): [Vector2, Vector2][] {
+    private getSides(): [Vector2, Vector2][] {
         this.normalize();
 
         const sides: [Vector2, Vector2][] = [];
@@ -239,7 +239,6 @@ export class TetrominoMatrix {
 
             await gameObject.addComponent(Rigidbody, rb => {
                 rb.collisionFilterMask = 0b1;
-                rb.force = new Vector2(0, 0.001);
             });
 
             await gameObject.addComponent(TetrominoBehaviour);
@@ -323,9 +322,9 @@ export class TetrominoMatrix {
 
         this.matrices = [
             rect,
+            long, long.clone.rotate(90),
             l1, l1.clone.rotate(90), l1.clone.rotate(180), l1.clone.rotate(270),
             l2, l2.clone.rotate(90), l2.clone.rotate(180), l2.clone.rotate(270),
-            long, long.clone.rotate(90),
             z1, z1.clone.rotate(90),
             z2, z2.clone.rotate(90),
             thing3, thing3.clone.rotate(90), thing3.clone.rotate(180), thing3.clone.rotate(270)

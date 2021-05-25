@@ -81,20 +81,8 @@ export class Tetris {
 
         if (top === 0) return;
 
-        const width = new TetrominoMatrix(matrix).width;
 
-
-        let ids = [];
-
-        for (let i = 0; i < width; i++) {
-            if (this._matrix[top - 1][left + i]) {
-                ids.push(this._matrix[top - 1][left + i]);
-            }
-        }
-
-        ids = ids.filter(Boolean);
-
-        this.updateTetrominos(id);
+        this.updateTetrominos();
 
         this.score++;
 
@@ -117,19 +105,24 @@ export class Tetris {
     }
 
     private canMoveTetromino(id: number): boolean {
+        if (id === 0) return false;
+
         let counter = 0;
 
         for (let y = this._height - 2; y >= 0; y--) {
-            for (let x = this._width - 1; x >= 0; x--) {
-                if (this._matrix[y][x] == id && this._matrix[y + 1][x] != 0 && this._matrix[y + 1][x] != id) return false;
-                counter++;
+            for (let x = 0; x < this._width; x++) {
+                if (this._matrix[y][x] === id && y + 1 < this._height && (this._matrix[y + 1][x] === 0 || this._matrix[y + 1][x] === id) && ++counter === 4) return true;
             }
         }
 
-        return counter == 4;
-
+        return false;
     }
 
+    /**
+     * 
+     * move tetromino with id downwards y+1 
+     * 
+     */
     private moveTetromino(id: number): void {
         let positions: Vector2[] = [];
 
@@ -147,8 +140,8 @@ export class Tetris {
         }
     }
 
-    private updateTetrominos(id: number) {
-        for (let y = this._height - 1; y >= 0; y--) {
+    private updateTetrominos() {
+        for (let y = this._height - 2; y >= 0; y--) {
             for (let x = this._width - 1; x >= 0; x--) {
                 const id = this._matrix[y][x];
                 while (this.canMoveTetromino(id)) this.moveTetromino(id);
@@ -160,11 +153,11 @@ export class Tetris {
         let bestTetromino: { score: number, x: number, y: number, tetrominoIndex: number } = <any>{ score: -1, x: -1, y: -1, tetrominoIndex: -1 };
 
 
-        const bottomY = this.getEmptyFieldClosestToBottom()[1];                         // werte überprüfen
+        const bottomY = this.getEmptyFieldClosestToBottom()[1];
 
         if (bottomY === -1) return bestTetromino;
 
-        const topY = clamp(0, this._height, this.getEmptyLineClosestToBottom() - 3);    // werte überprüfen
+        const topY = clamp(0, this._height, this.getEmptyLineClosestToBottom() - 3);
 
 
         for (let tetrominoIndex = 0; tetrominoIndex < TetrominoMatrix.matrices.length; tetrominoIndex++) {
@@ -182,17 +175,32 @@ export class Tetris {
     }
 
     private testTetromino(tetrominoIndex: number, x: number, y: number): boolean {
+        if (this.isBlockedAbove(tetrominoIndex, x, y)) return false;
+
         const matrix = TetrominoMatrix.matrices[tetrominoIndex].optimizedMatrix;
 
         if (x + matrix[0].length - 1 >= this._width || y + matrix.length - 1 >= this._height) return false;
 
-        for (let y_ = 0; y_ < matrix.length; y_++) {
+
+        for (let y_ = 0; y_ < matrix.length; y_++) { // 0 at offset+matrix
             for (let x_ = 0; x_ < matrix[0].length; x_++) {
                 if (matrix[y_][x_] && this._matrix[y + y_][x + x_] !== 0) return false;
-                else if (matrix[y_][x_] && y_ + 1 < matrix.length && !matrix[y_ + 1][x_] && y + y_ + 1 < this._height && this._matrix[y + y_ + 1][x + x_] === 0) {
-                    return false;
+            }
+        }
+
+        for (let x_ = 0; x_ < matrix[0].length; x_++) { // no 0 inside matrix
+            for (let y_ = matrix.length - 1; y_ > 0; y_--) {
+                if (matrix[y_][x_]) break;
+
+                if (matrix[y_ - 1][x_]) {
+                    if (this._matrix[y_ + y][x_ + x] === 0) return false;
+                    break;
                 }
             }
+        }
+
+        for (let x_ = 0; x_ < matrix[0].length; x_++) { // no 0 below matrix
+            if (y + matrix.length < this._height && this._matrix[y + matrix.length][x + x_] === 0) return false;
         }
 
         return true;
@@ -205,8 +213,6 @@ export class Tetris {
      * 
      */
     private getScore(tetrominoIndex: number, x: number, y: number): number {
-        if (this.isBlockedAbove(tetrominoIndex, x, y)) return -1;
-
         const matrix = TetrominoMatrix.matrices[tetrominoIndex].optimizedMatrix;
 
         let score = 0;
@@ -217,15 +223,20 @@ export class Tetris {
             }
         }
 
+        if (tetrominoIndex < 3) score -= 0.5;
+
         return score;
     }
 
     private isBlockedAbove(tetrominoIndex: number, x: number, y: number): boolean {
-        const width = TetrominoMatrix.matrices[tetrominoIndex].width;
+        const matrix = TetrominoMatrix.matrices[tetrominoIndex].optimizedMatrix;
 
-        for (let y_ = y; y_ >= 0; y_--) {
-            for (let x_ = 0; x_ < width; x_++) {
-                if (this._matrix[y_][x + x_] !== 0) return true;
+        const blub = new Array(matrix[0].length).fill(false);
+
+        for (let y_ = y + matrix.length - 1; y_ >= 0; y_--) {
+            for (let x_ = 0; x_ < matrix[0].length; x_++) {
+                if (!blub[x_] && matrix[y_ - y][x_]) blub[x_] = true;
+                if (blub[x_] && this._matrix[y_][x + x_] !== 0) return true;
             }
         }
 
@@ -250,7 +261,7 @@ export class Tetris {
             if (this.lineIsEmpty(y)) return y;
         }
 
-        return this._matrix.length - 1;
+        return -1;
     }
 
     /**
