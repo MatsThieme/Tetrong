@@ -56,5 +56,22 @@ export function MainMenuPrefab(menu: UIMenu) {
         text.font = 'Default-Small';
     });
 
+
+    menu.addUIElement('SnowballEngine', UIButton, button => {
+        button.alignH = AlignH.Right;
+        button.alignV = AlignV.Bottom;
+
+        button.position.x = button.position.y = 100;
+
+        button.text = 'Made with SnowballEngine';
+
+
+        button.font = 'Default-Normal';
+
+        button.onInput = () => {
+            window.open('https://github.com/MatsThieme/SnowballEngineTemplate');
+        };
+    });
+
     menu.background = Shape.createSprite('Rect', Color.white);
 }
