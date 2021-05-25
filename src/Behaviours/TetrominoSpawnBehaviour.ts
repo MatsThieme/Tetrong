@@ -1,6 +1,6 @@
 import { TetrominoMatrix } from 'Prefabs/Tetromino/TetrominoMatrix';
 import { Behaviour, Scene, Stopwatch, Vector2 } from 'SE';
-import { SaveScore } from './Tetris/SaveScore';
+import { Score } from './Tetris/SaveScore';
 import { Tetris } from './Tetris/Tetris';
 
 export class TetrominoSpawnBehaviour extends Behaviour {
@@ -22,7 +22,7 @@ export class TetrominoSpawnBehaviour extends Behaviour {
             await this.tetris.instantiateNextTetromino();
 
             if (this.tetris.matrixFull) {
-                SaveScore.highScore = SaveScore.lastScore = this.tetris.score;
+                Score.highScore = Score.lastScore = this.tetris.score;
                 Scene.sceneManager.load('Main Menu Scene');
             }
 

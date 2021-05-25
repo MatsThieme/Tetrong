@@ -1,4 +1,4 @@
-import { SaveScore } from 'Behaviours/Tetris/SaveScore';
+import { Score } from 'Behaviours/Tetris/SaveScore';
 import { AlignH, AlignV, Color, Scene, Shape, UIButton, UIMenu, UIText } from 'SE';
 
 export function MainMenuPrefab(menu: UIMenu) {
@@ -13,7 +13,7 @@ export function MainMenuPrefab(menu: UIMenu) {
         button.text = 'Play';
 
 
-        button.font = 'Default-Normal';
+        button.font = 'Default-Large';
 
         button.onInput = () => {
             Scene.sceneManager.load('Main Scene');
@@ -37,9 +37,9 @@ export function MainMenuPrefab(menu: UIMenu) {
         text.alignV = AlignV.Center;
 
         text.position.x = 50;
-        text.position.y = 57;
+        text.position.y = 60;
 
-        text.text = 'Last Score: ' + SaveScore.lastScore;
+        text.text = 'Last Score: ' + Score.lastScore;
 
         text.font = 'Default-Small';
     });
@@ -49,9 +49,9 @@ export function MainMenuPrefab(menu: UIMenu) {
         text.alignV = AlignV.Center;
 
         text.position.x = 50;
-        text.position.y = 60;
+        text.position.y = 63;
 
-        text.text = 'Highest Score: ' + SaveScore.highScore;
+        text.text = 'Highest Score: ' + Score.highScore;
 
         text.font = 'Default-Small';
     });

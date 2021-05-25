@@ -10,7 +10,7 @@ export function LoadingScreenPrefab(menu: UIMenu) {
         text.text = 'loading';
 
         let counter = 0;
-        new Interval(clear => text.text = 'loading' + '.'.repeat(counter = ++counter % 4), 500)
+        new Interval(clear => text.text = 'loading' + '.'.repeat(counter = ++counter % 4), 500);
 
 
         text.font = 'Default-Normal';

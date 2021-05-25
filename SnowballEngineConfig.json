@@ -1,6 +1,6 @@
 {
-    "title": "Template",
-    "description": "SnowballEngine Project Template",
+    "title": "Tetrong",
+    "description": "A Tetris-Pong mix",
     "version": "1.0.0",
     "settings": {
         "allowContextMenu": false,
@@ -9,7 +9,7 @@
         "PIXIjsAntialiasing": true
     },
     "cordova-settings": {
-        "id": "com.SnowballEngine.Template",
+        "id": "com.SnowballEngine.Tetrong",
         "author": {
             "name": "",
             "email": "",

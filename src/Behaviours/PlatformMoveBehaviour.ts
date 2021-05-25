@@ -1,4 +1,4 @@
-import { Behaviour, clamp, ComponentType, GameObject, Input, Rigidbody, Vector2 } from 'SE';
+import { Behaviour, clamp, ComponentType, GameObject, GameTime, Input, Rigidbody, Vector2 } from 'SE';
 
 export class PlatformMoveBehaviour extends Behaviour {
     platform1!: GameObject;
@@ -38,12 +38,12 @@ export class PlatformMoveBehaviour extends Behaviour {
             const wantedy1 = clamp(this.minY, this.maxY, this.scene.cameraManager.cameras[0].cameraToWorldPoint(pointer.v2).y);
             const currenty1 = this.platform1.transform.position.y;
 
-            this.rigidBody1.velocity = new Vector2(0, (wantedy1 - currenty1) / 10);
+            this.rigidBody1.velocity = new Vector2(0, (wantedy1 - currenty1) * GameTime.deltaTime / 40);
 
             const wantedy2 = clamp(this.minY, this.maxY, this.scene.cameraManager.cameras[0].cameraToWorldPoint(pointer.v2).y);
             const currenty2 = this.platform2.transform.position.y;
 
-            this.rigidBody2.velocity = new Vector2(0, (wantedy2 - currenty2) / 10);
+            this.rigidBody2.velocity = new Vector2(0, (wantedy2 - currenty2) * GameTime.deltaTime / 40);
         }
 
         this.platform1.transform.position.x = -6.5;

@@ -1,4 +1,4 @@
-import { SaveScore } from 'Behaviours/Tetris/SaveScore';
+import { Score } from 'Behaviours/Tetris/SaveScore';
 import { TetrominoBehaviour } from 'Behaviours/TetrominoBehaviour';
 import { TetrominoMatrix } from 'Prefabs/Tetromino/TetrominoMatrix';
 import { clamp, ComponentType, Instantiate, PolygonCollider, Vector2 } from 'SE';
@@ -98,7 +98,7 @@ export class Tetris {
 
         this.score++;
 
-        SaveScore.updateScoreDisplay(this.score);
+        Score.updateScoreDisplay(this.score);
     }
 
     /**

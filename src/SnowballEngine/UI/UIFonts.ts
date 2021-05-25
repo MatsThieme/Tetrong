@@ -5,7 +5,7 @@ import { Debug } from 'SnowballEngine/Debug';
 
 /** @category UI */
 export class UIFonts {
-    private static readonly _fonts: Map<UIFont, { style: BitmapTextStyle, font: BitmapFont }>;
+    private static readonly _fonts: Map<UIFont, { style: BitmapTextStyle, font: BitmapFont, bytes: number }>;
     private static lastInnerHeight: number = 0;
 
     public static init(): void {
@@ -34,6 +34,16 @@ export class UIFonts {
         });
     }
 
+    public static get bytesUsed(): number {
+        let bytes = 0;
+
+        for (const f of this._fonts.values()) {
+            bytes += f.bytes;
+        }
+
+        return bytes;
+    }
+
     public static add(name: UIFont, style: BitmapTextStyle, chars: string = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789;:-/\\&%$"!.,() '): void {
         if (UIFonts._fonts.has(name)) throw new Error(`Font with name ${name} exists`);
 
@@ -46,7 +56,19 @@ export class UIFonts {
         if (width > 4096) width /= Math.ceil(width / 4096);
         width = Math.round(width);
 
-        UIFonts._fonts.set(name, { style, font: BitmapFont.from(name, { ...style, fontSize, strokeThickness }, { resolution: 1, textureHeight: Math.round(fontSize * 1.3), textureWidth: width, chars }) });
+        const font = BitmapFont.from(name, { ...style, fontSize, strokeThickness }, { resolution: 1, textureHeight: Math.round(fontSize * 1.3), textureWidth: width, chars });
+
+        const pageTextures = font.pageTextures;
+
+        let size = 0;
+
+        for (const id in pageTextures) {
+            size += pageTextures[id].baseTexture.width * pageTextures[id].baseTexture.height;
+        }
+
+        size *= 4;
+
+        UIFonts._fonts.set(name, { style, font, bytes: size });
     }
 
     public static remove(name: UIFont): void {

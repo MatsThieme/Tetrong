@@ -1,6 +1,6 @@
 import { Engine, IEventCollision } from 'matter-js';
 import { AudioSource, Behaviour, ComponentType, GameObject, GameTime, Rigidbody, Scene, Vector2 } from 'SE';
-import { SaveScore } from './Tetris/SaveScore';
+import { Score } from './Tetris/SaveScore';
 import { TetrominoSpawnBehaviour } from './TetrominoSpawnBehaviour';
 
 export class BallBehaviour extends Behaviour {
@@ -40,7 +40,7 @@ export class BallBehaviour extends Behaviour {
             const camera = GameObject.find('Camera')!;
             const bh = camera.getComponent(TetrominoSpawnBehaviour)!;
 
-            SaveScore.highScore = SaveScore.lastScore = bh.tetris.score;
+            Score.highScore = Score.lastScore = bh.tetris.score;
         }
 
         this.rigidbody.angularVelocity *= 0.985;
