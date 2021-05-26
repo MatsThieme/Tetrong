@@ -42,7 +42,7 @@ export class BallBehaviour extends Behaviour {
             Score.highScore = Score.lastScore = bh.tetris.score;
         }
 
-        this.rigidbody.angularVelocity *= 0.985;
+        this.rigidbody.angularVelocity *= 1 - (0.06 / ((1000 / 60) / GameTime.deltaTime));
     }
 
     onCollisionEnter(collision: CollisionEvent) {
