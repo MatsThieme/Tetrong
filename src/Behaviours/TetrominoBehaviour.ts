@@ -1,4 +1,3 @@
-import { Engine, IEventCollision } from 'matter-js';
 import { Behaviour, ComponentType, Destroy, Rigidbody, Vector2 } from 'SE';
 import { Tetris } from './Tetris/Tetris';
 
@@ -24,10 +23,8 @@ export class TetrominoBehaviour extends Behaviour {
         this.gameObject.transform.position.x = this.xpos;
     }
 
-    onCollisionEnter(matterCollisionEvent: IEventCollision<Engine>) {
-        const otherBody = (<any>matterCollisionEvent.pairs[0].bodyA).gameObject.name === this.gameObject.name ? matterCollisionEvent.pairs[0].bodyB : matterCollisionEvent.pairs[0].bodyA;
-
-        if ((<any>otherBody).gameObject.name === 'Ball') {
+    onCollisionEnter(collision: CollisionEvent) {
+        if (collision.otherCollider.gameObject.name === 'Ball') {
             if (!this.isDestroyed) {
                 Destroy(this.gameObject);
                 this.isDestroyed = true;

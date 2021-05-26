@@ -1,4 +1,3 @@
-import { Engine, IEventCollision } from 'matter-js';
 import { AudioSource, Behaviour, ComponentType, GameObject, GameTime, Rigidbody, Scene, Vector2 } from 'SE';
 import { Score } from './Tetris/SaveScore';
 import { TetrominoSpawnBehaviour } from './TetrominoSpawnBehaviour';
@@ -46,10 +45,8 @@ export class BallBehaviour extends Behaviour {
         this.rigidbody.angularVelocity *= 0.985;
     }
 
-    onCollisionEnter(matterCollisionEvent: IEventCollision<Engine>) {
-        const otherBody = (<any>matterCollisionEvent.pairs[0].bodyA).gameObject.name === this.gameObject.name ? matterCollisionEvent.pairs[0].bodyB : matterCollisionEvent.pairs[0].bodyA;
-
-        if ((<any>otherBody).gameObject.name.includes('Tetromino')) {
+    onCollisionEnter(collision: CollisionEvent) {
+        if (collision.otherCollider.gameObject.name.includes('Tetromino')) {
             this.audioSource2.stop();
             this.audioSource2.play();
         } else {
