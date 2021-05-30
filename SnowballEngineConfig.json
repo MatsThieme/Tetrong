@@ -33,7 +33,7 @@
         }
     },
     "build": {
-        "isDevelopmentBuild": false,
+        "isDevelopmentBuild": true,
         "updateADB": true,
         "platforms": [
             "android"
