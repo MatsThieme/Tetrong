@@ -11,14 +11,32 @@
     "cordova-settings": {
         "id": "com.SnowballEngine.Tetrong",
         "author": {
-            "name": "",
-            "email": "",
+            "name": "Mats Thieme",
+            "email": "bla.mobileapps@gmail.com",
             "href": ""
         },
-        "plugins": []
+        "plugins": [],
+        "access": {},
+        "allow-intent": [],
+        "icons": [
+            {
+                "src": "../Assets/icon.png"
+            }
+        ],
+        "platform-android": {
+            "access": {},
+            "allow-intent": [],
+            "preference": {
+                "FullScreen": true,
+                "Orientation": "landscape"
+            }
+        }
     },
     "build": {
-        "isDevelopmentBuild": true,
-        "updateADB": true
+        "isDevelopmentBuild": false,
+        "updateADB": true,
+        "platforms": [
+            "android"
+        ]
     }
 }
