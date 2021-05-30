@@ -1,4 +1,12 @@
-<!doctype html><html><head><title>Tetrong</title><meta charset="utf8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="icon" href="favicon.ico" type="image/x-icon"><style>canvas {
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tetrong</title>
+        <meta charset="utf8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" href="favicon.ico" type="image/x-icon">
+        <style>
+            canvas {
                 position: absolute;
                 left: 0px;
                 top: 0px;
@@ -14,4 +22,13 @@
                 width: 100px;
                 height: 100px;
                 display: block;
-            }</style><meta name="description" content="A Tetris-Pong mix"></head><body><script>window.AudioContext = window.AudioContext || window.webkitAudioContext;</script><script defer="defer" src="main.js"></script></body></html>
+            }
+        </style>
+    <meta name="description" content="A Tetris-Pong mix"></head>
+    <body>
+        <!-- support safari -->
+        <script>window.AudioContext = window.AudioContext || window.webkitAudioContext;</script>
+        <!-- for cordova / phonegap builds -->
+        <script src="cordova.js"></script>
+    <script defer src="main.js"></script></body>
+</html>

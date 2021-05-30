@@ -280,10 +280,6 @@ const cordova = {
             await promisify(exec)(`node sepm.js -n -p=${config.title} -b${_build ? ' -release' : ''} -platformadd=${platform}`, { cwd: sepm });
             console.log(`${platform} built`);
         }
-
-
-        // <script src="cordova.js"></script>
-
     }
 };
 
