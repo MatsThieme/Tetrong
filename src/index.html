@@ -26,6 +26,8 @@
         </style>
     </head>
     <body>
+        <!-- support safari -->
+        <script>AudioContext = AudioContext || webkitAudioContext;</script>
         <!-- for cordova / phonegap builds -->
         <script src="cordova.js"></script>
     </body>
