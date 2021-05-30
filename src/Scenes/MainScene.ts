@@ -5,7 +5,7 @@ import { PlatformPrefab } from 'Prefabs/PlatformPrefab';
 import { TopBoundaryPrefab } from 'Prefabs/TopBoundaryPrefab';
 import { FPSDisplayPrefab } from 'Prefabs/UI/FPSDisplayPrefab';
 import { ScoreDisplayPrefab } from 'Prefabs/UI/ScoreDisplayPrefab';
-import { Instantiate, Scene } from 'SE';
+import { Client, Input, InputDeviceType, Instantiate, Scene } from 'SE';
 
 export async function MainScene(scene: Scene) {
     await scene.ui.addMenu('FPS Display', FPSDisplayPrefab);
@@ -20,4 +20,12 @@ export async function MainScene(scene: Scene) {
 
     await Instantiate('TopBoundary', TopBoundaryPrefab);
     await Instantiate('BottomBoundary', BottomBoundaryPrefab);
+
+
+    if (Client.isMobile) {
+        scene.cameraManager.renderScale = 0.8;
+        Input.devices = InputDeviceType.Touch;
+    } else Input.devices = InputDeviceType.Mouse;
+
+    scene.physics.gravity.y *= 2;
 }

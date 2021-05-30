@@ -46,7 +46,7 @@ export class AudioSource extends Component<AudioSourceEventTypes>  {
         this._sw = new Stopwatch(false);
         this._playing = false;
         this._maxDistance = 50;
-        this._zPosition = 0;
+        this._zPosition = 10;
         this._position = new Vector2();
 
         this.playGlobally = false;

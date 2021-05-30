@@ -1,23 +1,16 @@
-import { AudioSource, Behaviour, ComponentType, GameObject, GameTime, Rigidbody, Scene, Vector2 } from 'SE';
+import { Assets, AudioSource, Behaviour, ComponentType, GameObject, GameTime, Rigidbody, Scene, Vector2 } from 'SE';
 import { Score } from './Tetris/SaveScore';
 import { TetrominoSpawnBehaviour } from './TetrominoSpawnBehaviour';
 
 export class BallBehaviour extends Behaviour {
     rigidbody!: Rigidbody;
-    speed: number = 7;
-    audioSource1!: AudioSource;
-    audioSource2!: AudioSource;
+    speed: number = 8.5;
 
     start() {
         this.rigidbody = this.gameObject.getComponent(ComponentType.Rigidbody)!;
         const [bounce, hit] = this.gameObject.getComponents(ComponentType.AudioSource)!;
 
-        this.audioSource1 = bounce;
-        this.audioSource2 = hit;
-
         if (!this.rigidbody) throw new Error('ball rigidbody not found');
-        if (!this.audioSource1) throw new Error('ball audioSource1 not found');
-        if (!this.audioSource2) throw new Error('ball audioSource2 not found');
     }
 
     update() {
@@ -47,11 +40,19 @@ export class BallBehaviour extends Behaviour {
 
     onCollisionEnter(collision: CollisionEvent) {
         if (collision.otherCollider.gameObject.name.includes('Tetromino')) {
-            this.audioSource2.stop();
-            this.audioSource2.play();
+            const go = new GameObject('destroy audiosource');
+            go.transform.position = new Vector2(collision.contacts[0].vertex.x, collision.contacts[0].vertex.y);
+            go.addComponent(AudioSource, source => {
+                source.asset = Assets.get('ball_hit.mp3');
+                source.play();
+            });
         } else {
-            this.audioSource1.stop();
-            this.audioSource1.play();
+            const go = new GameObject('bounce audiosource');
+            go.transform.position = new Vector2(collision.contacts[0].vertex.x, collision.contacts[0].vertex.y);
+            go.addComponent(AudioSource, source => {
+                source.asset = Assets.get('ball_bounce.mp3');
+                source.play();
+            });
         }
     }
 }

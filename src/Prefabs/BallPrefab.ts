@@ -1,5 +1,5 @@
 import { BallBehaviour } from 'Behaviours/BallBehaviour';
-import { Assets, AudioSource, CircleCollider, GameObject, Rigidbody, Texture, Vector2 } from 'SE';
+import { Assets, CircleCollider, GameObject, Rigidbody, Texture, Vector2 } from 'SE';
 
 export function BallPrefab(gameObject: GameObject): void {
     gameObject.addComponent(Rigidbody, rb => {
@@ -8,13 +8,6 @@ export function BallPrefab(gameObject: GameObject): void {
         rb.ignoreGravity = true;
         rb.collisionFilterMask = 0b11;
     });
-    gameObject.addComponent(AudioSource, audioSource => {
-        audioSource.asset = Assets.get('ball_bounce.mp3');
-    });
-
-    gameObject.addComponent(AudioSource, audioSource => {
-        audioSource.asset = Assets.get('ball_hit.mp3');
-    });
 
     gameObject.addComponent(CircleCollider);
     gameObject.addComponent(BallBehaviour);
@@ -22,5 +15,5 @@ export function BallPrefab(gameObject: GameObject): void {
         texture.asset = Assets.get('ball');
     });
 
-    gameObject.transform.scale = new Vector2(0.8, 0.8);
+    gameObject.transform.scale = new Vector2(0.9, 0.9);
 }

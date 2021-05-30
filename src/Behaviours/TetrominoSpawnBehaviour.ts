@@ -5,7 +5,7 @@ import { Tetris } from './Tetris/Tetris';
 
 export class TetrominoSpawnBehaviour extends Behaviour {
     sw!: Stopwatch;
-    spawnInterval = 1500;
+    spawnInterval = 1000;
     counter = 0;
     tetris!: Tetris;
 
@@ -14,7 +14,7 @@ export class TetrominoSpawnBehaviour extends Behaviour {
 
         TetrominoMatrix.init();
 
-        this.tetris = new Tetris(new Vector2(6, 12));
+        this.tetris = new Tetris(new Vector2(7, 8), 0.9);
     }
 
     async earlyUpdate() {
