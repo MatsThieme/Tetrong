@@ -5,7 +5,7 @@ import { PlatformPrefab } from 'Prefabs/PlatformPrefab';
 import { TopBoundaryPrefab } from 'Prefabs/TopBoundaryPrefab';
 import { FPSDisplayPrefab } from 'Prefabs/UI/FPSDisplayPrefab';
 import { ScoreDisplayPrefab } from 'Prefabs/UI/ScoreDisplayPrefab';
-import { Client, Input, InputDeviceType, Instantiate, Scene } from 'SE';
+import { Client, EventHandler, Input, InputDeviceType, Instantiate, Scene } from 'SE';
 
 export async function MainScene(scene: Scene) {
     await scene.ui.addMenu('FPS Display', FPSDisplayPrefab);
@@ -28,4 +28,11 @@ export async function MainScene(scene: Scene) {
     } else Input.devices = InputDeviceType.Mouse;
 
     scene.physics.gravity.y *= 2;
+
+
+    Input.addListener('Trigger', new EventHandler(e => {
+        if (e.button?.click) {
+            console.log('ay');
+        }
+    }));
 }

@@ -1,6 +1,5 @@
 import { TetrominoBehaviour } from 'Behaviours/TetrominoBehaviour';
-import { PolygonCollider } from 'GameObject/Components/PolygonCollider';
-import { AlignH, AlignV, Angle, Assets, Color, GameObject, Rigidbody, Texture, Transform, Vector2 } from 'SE';
+import { AlignH, AlignV, Angle, Assets, Color, GameObject, PolygonCollider, Rigidbody, Texture, Transform, Vector2 } from 'SE';
 
 export class TetrominoMatrix {
     /**

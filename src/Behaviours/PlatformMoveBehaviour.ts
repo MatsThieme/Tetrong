@@ -20,7 +20,7 @@ export class PlatformMoveBehaviour extends Behaviour {
         this.rigidBody2 = this.platform2.getComponent(ComponentType.Rigidbody)!;
 
         if (!this.rigidBody1) throw new Error('rigidBody1 not found');
-        if (!this.rigidBody2) throw new Error('rigidBody1 not found');
+        if (!this.rigidBody2) throw new Error('rigidBody2 not found');
 
 
         this.platform1.transform.position.x = -6.5;

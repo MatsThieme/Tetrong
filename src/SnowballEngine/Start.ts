@@ -10,10 +10,11 @@ import { Game } from '../Game';
 import { Client } from './Client';
 import { Debug } from './Debug';
 
+window.AudioContext = window.AudioContext || (<any>window).webkitAudioContext; // support safari
 
 PIXI.utils.skipHello(); // don't show PIXIs hello in console
 Ticker.system.autoStart = false;
-if (projectConfig.build.isDevelopmentBuild) (<any>window).PIXI = PIXI; // for the chrome pixijs developer tools
+if (projectConfig.build.debugMode) (<any>window).PIXI = PIXI; // for the chrome pixijs developer tools
 
 (<any>Common).setDecomp(poly_decomp);
 

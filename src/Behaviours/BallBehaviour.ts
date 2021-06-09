@@ -1,4 +1,4 @@
-import { Assets, AudioSource, Behaviour, ComponentType, GameObject, GameTime, Rigidbody, Scene, Vector2 } from 'SE';
+import { Assets, AudioSource, Behaviour, ComponentType, Destroy, GameObject, GameTime, Rigidbody, Scene, Vector2 } from 'SE';
 import { Score } from './Tetris/SaveScore';
 import { TetrominoSpawnBehaviour } from './TetrominoSpawnBehaviour';
 
@@ -46,6 +46,9 @@ export class BallBehaviour extends Behaviour {
                 source.asset = Assets.get('ball_hit.mp3');
                 source.play();
             });
+            setTimeout(() => {
+                if ('addComponent' in go) Destroy(go);
+            }, 1000);
         } else {
             const go = new GameObject('bounce audiosource');
             go.transform.position = new Vector2(collision.contacts[0].vertex.x, collision.contacts[0].vertex.y);
@@ -53,6 +56,9 @@ export class BallBehaviour extends Behaviour {
                 source.asset = Assets.get('ball_bounce.mp3');
                 source.play();
             });
+            setTimeout(() => {
+                if ('addComponent' in go) Destroy(go);
+            }, 1000);
         }
     }
 }

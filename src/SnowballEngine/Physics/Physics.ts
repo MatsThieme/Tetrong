@@ -10,25 +10,24 @@ import { Canvas } from 'Utility/Canvas/Canvas';
 import { Vector2 } from 'Utility/Vector2';
 
 export class Physics implements Destroyable {
+    /**
+     * 
+     * Matterjs Engine instance
+     * 
+     */
     public readonly engine: Engine;
     public drawDebug: boolean;
     public readonly gravity: Vector2;
     private readonly _canvas: Canvas;
     private _lastDelta: number = 1000 / 60;
 
-    /**
-     * 
-     * Used to scale matterjs' size dependent options like gravity and body.slop
-     * default = 0.001
-     * 
-     */
-    public worldScale: number;
+    private _worldScale: number;
 
     public constructor() {
         this.drawDebug = false;
-        this.worldScale = 0.001;
+        this._worldScale = 0.001;
 
-        this.gravity = new Vector2(0, -0.01 * this.worldScale);
+        this.gravity = new Vector2(0, -0.01 * this._worldScale);
 
         this.engine = Engine.create();
         this.engine.world.gravity.y = 0;
@@ -43,7 +42,26 @@ export class Physics implements Destroyable {
         this._canvas = new Canvas(innerWidth, innerHeight);
         this._canvas.style.zIndex = '1';
 
-        if (projectConfig.build.isDevelopmentBuild) document.body.appendChild(this._canvas);
+        if (projectConfig.build.debugMode) document.body.appendChild(this._canvas);
+    }
+
+    /**
+     * 
+     * Used to scale matterjs' size dependent options like gravity and body.slop
+     * default = 0.001
+     * 
+     */
+    public get worldScale(): number {
+        return this._worldScale;
+    }
+    public set worldScale(val: number) {
+        this.gravity.scale(val / this._worldScale);
+
+        for (const body of Composite.allBodies(this.engine.world)) {
+            body.slop = body.slop / this._worldScale * val;
+        }
+
+        this._worldScale = val;
     }
 
     public get positionIterations(): number {
@@ -176,7 +194,7 @@ export class Physics implements Destroyable {
         Engine.update(this.engine, GameTime.deltaTime, GameTime.deltaTime / this._lastDelta);
         this._lastDelta = GameTime.deltaTime;
 
-        if (!projectConfig.build.isDevelopmentBuild) return;
+        if (!projectConfig.build.debugMode) return;
 
         if (this.drawDebug) {
             const camera = Scene.currentScene.cameraManager.cameras[0];
