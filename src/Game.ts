@@ -17,7 +17,7 @@ export class Game {
 
         await sceneManager.load('Loading Screen Scene');
 
-        Assets.set(Shape.createSprite('Rect', Color.orange), 'platform');
+        Assets.set('platform', Shape.createSprite('Rect', Color.orange));
 
         await Assets.loadFromAssetDB();
 

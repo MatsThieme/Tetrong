@@ -46,16 +46,17 @@ export class Tetris {
 
         const prefab = TetrominoMatrix.matrices[bestfit.tetrominoIndex].getPrefab();
 
-        const go = await Instantiate('Tetromino ' + this._nextID, prefab);
-        go.transform.scale.scale(this._scale);
+        await Instantiate('Tetromino ' + this._nextID, prefab, go => {
+            go.transform.scale.scale(this._scale);
 
-        const c = go.getComponent<PolygonCollider>(ComponentType.PolygonCollider)!;
-        go.transform.position.x = (bestfit.x - this._width / 2 + c.body!.position.x - c.bounds!.min.x) * this._scale;
+            const c = go.getComponent<PolygonCollider>(ComponentType.PolygonCollider)!;
+            go.transform.position.x = (bestfit.x - this._width / 2 + c.body!.position.x - c.bounds!.min.x) * this._scale;
 
 
-        const bh = go.getComponent<TetrominoBehaviour>(ComponentType.Behaviour)!;
-        bh.id = this._nextID;
-        bh.tetris = this;
+            const bh = go.getComponent<TetrominoBehaviour>(ComponentType.Behaviour)!;
+            bh.id = this._nextID;
+            bh.tetris = this;
+        });
 
 
         this._nextID++;
