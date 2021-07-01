@@ -1,5 +1,6 @@
 import { Assets, AudioSource, Behaviour, ComponentType, Destroy, GameObject, GameTime, Rigidbody, Scene, Vector2 } from 'SE';
-import { Score } from './Tetris/SaveScore';
+import { Difficulty } from './Tetris/Difficulty';
+import { Storage } from './Tetris/Storage';
 import { TetrominoSpawnBehaviour } from './TetrominoSpawnBehaviour';
 
 export class BallBehaviour extends Behaviour {
@@ -8,9 +9,11 @@ export class BallBehaviour extends Behaviour {
 
     start() {
         this.rigidbody = this.gameObject.getComponent(ComponentType.Rigidbody)!;
-        const [bounce, hit] = this.gameObject.getComponents(ComponentType.AudioSource)!;
 
         if (!this.rigidbody) throw new Error('ball rigidbody not found');
+
+
+        this.speed *= Difficulty[Storage.gameMode];
     }
 
     update() {
@@ -32,7 +35,7 @@ export class BallBehaviour extends Behaviour {
             const camera = GameObject.find('Camera')!;
             const bh = camera.getComponent(TetrominoSpawnBehaviour)!;
 
-            Score.highScore = Score.lastScore = bh.tetris.score;
+            Storage.highScore = Storage.lastScore = bh.tetris.score;
         }
 
         this.rigidbody.angularVelocity *= 1 - (0.06 / ((1000 / 60) / GameTime.deltaTime));

@@ -1,12 +1,12 @@
 import { TetrominoMatrix } from 'Prefabs/Tetromino/TetrominoMatrix';
 import { Behaviour, Scene, Stopwatch, Vector2 } from 'SE';
-import { Score } from './Tetris/SaveScore';
+import { Difficulty } from './Tetris/Difficulty';
+import { Storage } from './Tetris/Storage';
 import { Tetris } from './Tetris/Tetris';
 
 export class TetrominoSpawnBehaviour extends Behaviour {
     sw!: Stopwatch;
-    spawnInterval = 1000;
-    counter = 0;
+    spawnInterval = 1200 / Difficulty[Storage.gameMode];
     tetris!: Tetris;
 
     start() {
@@ -14,7 +14,7 @@ export class TetrominoSpawnBehaviour extends Behaviour {
 
         TetrominoMatrix.init();
 
-        this.tetris = new Tetris(new Vector2(7, 8), 0.9);
+        this.tetris = new Tetris(new Vector2(Math.ceil(7 / Difficulty[Storage.gameMode]), 8), 0.9);
     }
 
     async earlyUpdate() {
@@ -22,7 +22,7 @@ export class TetrominoSpawnBehaviour extends Behaviour {
             await this.tetris.instantiateNextTetromino();
 
             if (this.tetris.matrixFull) {
-                Score.highScore = Score.lastScore = this.tetris.score;
+                Storage.highScore = Storage.lastScore = this.tetris.score;
                 Scene.sceneManager.load('Main Menu Scene');
             }
 

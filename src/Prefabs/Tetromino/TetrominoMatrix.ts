@@ -21,12 +21,16 @@ export class TetrominoMatrix {
 
     public readonly optimizedMatrix: boolean[][];
 
+    private readonly _gap: number;
+
     public constructor(matrix: [boolean, boolean, boolean, boolean][], color = Color.white) {
         this._matrix = matrix;
 
         this.optimizedMatrix = [];
 
         this.normalize();
+
+        this._gap = 0.01;
 
         this._verticies = PolygonCollider.sidesToVerticies(this.getSides());
 
@@ -172,20 +176,20 @@ export class TetrominoMatrix {
                         let xright = x + 1;
 
                         if (leftAbove && !rightAbove) {
-                            xleft -= 0.05;
-                            if (!right) xright -= 0.05;
+                            xleft -= this._gap;
+                            if (!right) xright -= this._gap;
                         } else if (!leftAbove && rightAbove) {
-                            if (!left) xleft += 0.05;
-                            xright += 0.05;
+                            if (!left) xleft += this._gap;
+                            xright += this._gap;
                         } else if (leftAbove && rightAbove) {
-                            xleft -= 0.05;
-                            xright += 0.05;
+                            xleft -= this._gap;
+                            xright += this._gap;
                         } else if (left || right) {
-                            if (!left) xleft += 0.05;
-                            if (!right) xright -= 0.05;
+                            if (!left) xleft += this._gap;
+                            if (!right) xright -= this._gap;
                         } else {
-                            xleft += 0.05;
-                            xright -= 0.05;
+                            xleft += this._gap;
+                            xright -= this._gap;
                         }
 
                         sides.push([new Vector2(xleft, -y), new Vector2(xright, -y)]);
@@ -196,31 +200,31 @@ export class TetrominoMatrix {
                         let xright = x + 1;
 
                         if (leftBelow && !rightBelow) {
-                            xleft -= 0.05;
-                            if (!right) xright -= 0.05;
+                            xleft -= this._gap;
+                            if (!right) xright -= this._gap;
                         } else if (!leftBelow && rightBelow) {
-                            if (!left) xleft += 0.05;
-                            xright += 0.05;
+                            if (!left) xleft += this._gap;
+                            xright += this._gap;
                         } else if (leftBelow && rightBelow) {
-                            xleft -= 0.05;
-                            xright += 0.05;
+                            xleft -= this._gap;
+                            xright += this._gap;
                         } else if (left || right) {
-                            if (!left) xleft += 0.05;
-                            if (!right) xright -= 0.05;
+                            if (!left) xleft += this._gap;
+                            if (!right) xright -= this._gap;
                         } else {
-                            xleft += 0.05;
-                            xright -= 0.05;
+                            xleft += this._gap;
+                            xright -= this._gap;
                         }
 
                         sides.push([new Vector2(xright, -(y + 1)), new Vector2(xleft, -(y + 1))]);
                     }
 
                     if (!left) {
-                        sides.push([new Vector2(x + 0.05, -(y + 1)), new Vector2(x + 0.05, -y)]);
+                        sides.push([new Vector2(x + this._gap, -(y + 1)), new Vector2(x + this._gap, -y)]);
                     }
 
                     if (!right) {
-                        sides.push([new Vector2(x + 0.95, -y), new Vector2(x + 0.95, -(y + 1))]);
+                        sides.push([new Vector2(x + (1 - this._gap), -y), new Vector2(x + (1 - this._gap), -(y + 1))]);
                     }
                 }
             }
@@ -243,7 +247,7 @@ export class TetrominoMatrix {
             await gameObject.addComponent(TetrominoBehaviour);
 
 
-            const t = Transform.createTransformable(Vector2.from(c.bounds!.min).sub(new Vector2(0.05, 0)), new Vector2(1, 1), new Angle());
+            const t = Transform.createTransformable(Vector2.from(c.bounds!.min).sub(new Vector2(this._gap, 0)), new Vector2(1, 1), new Angle());
             const localT = Transform.toLocal(t, gameObject.transform);
 
 

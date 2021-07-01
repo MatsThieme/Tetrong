@@ -1,5 +1,5 @@
-import { Score } from 'Behaviours/Tetris/SaveScore';
-import { AlignH, AlignV, Color, Scene, Shape, UIButton, UIMenu, UIText } from 'SE';
+import { Storage } from 'Behaviours/Tetris/Storage';
+import { AlignH, AlignV, Color, Scene, Shape, UIButton, UIMenu, UISelect, UIText } from 'SE';
 
 export function MainMenuPrefab(menu: UIMenu) {
     menu.active = true;
@@ -32,26 +32,26 @@ export function MainMenuPrefab(menu: UIMenu) {
         text.font = 'Red-Large';
     });
 
-    menu.addUIElement('Last Score', UIText, text => {
+    const lastScore = menu.addUIElement('Last Score', UIText, text => {
         text.alignH = AlignH.Center;
         text.alignV = AlignV.Center;
 
         text.position.x = 50;
         text.position.y = 60;
 
-        text.text = 'Last Score: ' + Score.lastScore;
+        text.text = 'Last Score: ' + Storage.lastScore;
 
         text.font = 'Default-Small';
     });
 
-    menu.addUIElement('High Score', UIText, text => {
+    const highScore = menu.addUIElement('High Score', UIText, text => {
         text.alignH = AlignH.Center;
         text.alignV = AlignV.Center;
 
         text.position.x = 50;
         text.position.y = 63;
 
-        text.text = 'Highest Score: ' + Score.highScore;
+        text.text = 'Highest Score: ' + Storage.highScore;
 
         text.font = 'Default-Small';
     });
@@ -70,6 +70,29 @@ export function MainMenuPrefab(menu: UIMenu) {
 
         button.onInput = () => {
             window.open('https://github.com/MatsThieme/SnowballEngineTemplate');
+        };
+    });
+
+    menu.addUIElement('Difficulty', UISelect, select => {
+        select.alignH = AlignH.Left;
+        select.alignV = AlignV.Bottom;
+        select.position.x = 0;
+        select.position.y = 100;
+        select.font = 'Default-Normal';
+
+        select.extendUp = true;
+
+        select.addLabel('Easy');
+        select.addLabel('Medium');
+        select.addLabel('Hard');
+        select.addLabel('Insane');
+
+
+        select.setValue(Storage.gameMode);
+        select.onInput = () => {
+            Storage.gameMode = <'Easy' | 'Medium' | 'Hard' | 'Insane'>select.value;
+            lastScore.text = 'Last Score: ' + Storage.lastScore;
+            highScore.text = 'Highest Score: ' + Storage.highScore;
         };
     });
 
