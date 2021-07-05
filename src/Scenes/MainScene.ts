@@ -7,7 +7,7 @@ import { PlatformPrefab } from 'Prefabs/PlatformPrefab';
 import { TopBoundaryPrefab } from 'Prefabs/TopBoundaryPrefab';
 import { FPSDisplayPrefab } from 'Prefabs/UI/FPSDisplayPrefab';
 import { ScoreDisplayPrefab } from 'Prefabs/UI/ScoreDisplayPrefab';
-import { Client, Input, InputDeviceType, Instantiate, Scene } from 'SE';
+import { Client, Input, InputDeviceType, Instantiate, Interval, Scene } from 'SE';
 
 export async function MainScene(scene: Scene) {
     scene.physics.gravity.y *= 2;
@@ -17,10 +17,20 @@ export async function MainScene(scene: Scene) {
     scene.physics.velocityIterations = Math.ceil(scene.physics.velocityIterations * Difficulty[Storage.gameMode]);
 
 
-    if (Client.isMobile) {
-        scene.cameraManager.renderScale = 0.8;
-        Input.devices = InputDeviceType.Touch;
-    } else Input.devices = InputDeviceType.Mouse;
+    if (Client.isMobile) Input.devices = InputDeviceType.Touch;
+    else Input.devices = InputDeviceType.Mouse;
+
+    new Interval(async i => {
+        const fps = await scene.framedata.measureFps(250);
+
+        if (fps < Client.monitorRefreshRate * 0.95 && scene.cameraManager.renderScale > 0.65) {
+            scene.cameraManager.renderScale -= 0.1;
+        } else {
+            i.clear();
+        }
+
+        console.log(scene.cameraManager.renderScale);
+    }, 300);
 
 
     await scene.ui.addMenu('FPS Display', FPSDisplayPrefab);
